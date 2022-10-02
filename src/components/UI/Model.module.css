@@ -1,0 +1,13 @@
+.model {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    height: 25%;
+    width: 45%;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(186, 186, 186);
+    border-left: 1px solid rgb(186, 186, 186);
+    margin: 1rem 0;
+    z-index: 30;
+    animation: slide-down 300ms ease-out forwards;
+  }

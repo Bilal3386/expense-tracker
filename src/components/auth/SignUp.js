@@ -1,19 +1,28 @@
 import React, { useRef } from "react";
 import classes from "./SignUp.module.css";
 
-const Login = props => {
+const SignUp = props => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
-  const submitHandler = (event) => {
+  const confirmPasswordRef = useRef("");
+
+  const submitHandler =  (event) => {
     event.preventDefault();
     const enteredEmail = emailRef.current.value;
     const enteredPassword = passwordRef.current.value;
-    props.onLogin(enteredEmail, enteredPassword)
+    const enteredConfirmPassword = confirmPasswordRef.current.value;
+    if (enteredPassword !== enteredConfirmPassword) {
+      alert("Password don't match");
+    } else {
+      props.onSignUp(enteredEmail, enteredConfirmPassword)
+    }
   };
+
   return (
     <section>
       <div className={classes.signUp}>
-        <h2>Login</h2>
+      <div className={classes.signUpChild}>
+        <h2>SignUp</h2>
         <form onSubmit={submitHandler}>
           <input
             autoComplete="on"
@@ -31,11 +40,20 @@ const Login = props => {
             required
             ref={passwordRef}
           />
-          <button>Login</button>
+          <input
+            autoComplete="on"
+            name="password"
+            type="password"
+            placeholder="Confirm Password"
+            required
+            ref={confirmPasswordRef}
+          />
+          <button>Sign Up</button>
         </form>
+        </div>
       </div>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;

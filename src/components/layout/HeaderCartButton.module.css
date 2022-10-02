@@ -1,0 +1,14 @@
+.header-button {
+    padding-bottom: 15px;
+}
+
+.header-button button {
+    border-radius: 50px;
+    border: none;
+    margin:  12px;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    font-style: italic;
+    background-color:  rgb(53, 158, 243);
+}

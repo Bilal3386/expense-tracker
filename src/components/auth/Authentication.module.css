@@ -2,9 +2,11 @@
     background-color: rgb(223, 252, 242);
     border: 1px solid rgb(215, 215, 215);
     text-align: center;
-    position: relative;
-    left: 37.44%;
     width: 25%;
+    position: relative;
+    top: 500px;
+    left: 37.34%;
+    cursor: pointer;
     margin: 12px auto;
     border-radius: 5px;
     padding: 10px;
@@ -13,6 +15,6 @@
 
 
 .login:hover,
-.login:focus{
+.login:focus {
     background-color: rgb(223, 252, 242);
 }

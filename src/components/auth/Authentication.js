@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import classes from "./Authentication.module.css";
+import AuthContext from "../../store/auth-context";
 
 const Authentication = () => {
+  const authCtx = useContext(AuthContext)
   const [isLogin, setIsLogin] = useState(false);
 
   const signUpHandler = async (email, password) => {
@@ -58,6 +60,7 @@ const Authentication = () => {
       })
       .then((data) => {
         console.log(data);
+        authCtx.login(data.idToken)
       })
       .catch((err) => {
         alert(err);
