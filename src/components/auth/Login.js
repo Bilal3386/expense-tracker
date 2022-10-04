@@ -11,9 +11,7 @@ const Login = props => {
     props.onLogin(enteredEmail, enteredPassword)
   };
   return (
-    <section>
-      <div className={classes.signUp}>
-      <div className={classes.signUpChild}>
+    <section className={classes.signUp}>
         <h2>Login</h2>
         <form onSubmit={submitHandler}>
           <input
@@ -34,8 +32,6 @@ const Login = props => {
           />
           <button>Login</button>
         </form>
-        </div>
-      </div>
     </section>
   );
 };

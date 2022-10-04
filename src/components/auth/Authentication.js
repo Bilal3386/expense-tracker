@@ -3,9 +3,10 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import classes from "./Authentication.module.css";
 import AuthContext from "../../store/auth-context";
+import Button from "../UI/Button";
 
-const Authentication = () => {
-  const authCtx = useContext(AuthContext)
+const Authentication = (props) => {
+  const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(false);
 
   const signUpHandler = async (email, password) => {
@@ -60,7 +61,7 @@ const Authentication = () => {
       })
       .then((data) => {
         console.log(data);
-        authCtx.login(data.idToken)
+        authCtx.login(data.idToken, data.email);
       })
       .catch((err) => {
         alert(err);
@@ -76,20 +77,18 @@ const Authentication = () => {
   };
 
   return (
-    <React.Fragment>
+    <section className={classes.auth}>
       {!isLogin && <SignUp onSignUp={signUpHandler} />}
       {isLogin && <Login onLogin={loginHandler} />}
       {!isLogin && (
-        <button onClick={clickSignUpHandler} className={classes.login}>
-          Have an account? Login
-        </button>
+        <Button onClick={clickSignUpHandler}>Have an account? Login</Button>
       )}
       {isLogin && (
-        <button onClick={clickLoginHandler} className={classes.login}>
+        <Button onClick={clickLoginHandler}>
           Don't have an account? Sign up
-        </button>
+        </Button>
       )}
-    </React.Fragment>
+    </section>
   );
 };
 

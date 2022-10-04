@@ -19,9 +19,7 @@ const SignUp = props => {
   };
 
   return (
-    <section>
-      <div className={classes.signUp}>
-      <div className={classes.signUpChild}>
+    <section className={classes.signUp}>
         <h2>SignUp</h2>
         <form onSubmit={submitHandler}>
           <input
@@ -50,8 +48,6 @@ const SignUp = props => {
           />
           <button>Sign Up</button>
         </form>
-        </div>
-      </div>
     </section>
   );
 };

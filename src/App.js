@@ -1,26 +1,28 @@
-import { useState } from "react";
+import { useContext } from "react";
 import Authentication from "./components/auth/Authentication";
 import Header from "./components/layout/Header";
-import Cart from './components/cart/Cart'
-
-
+import { Route, Switch, Redirect } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
+import AuthContext from "./store/auth-context";
 
 function App() {
-  const [cartShow, setCartShow] = useState(false)
-
-  const closeCartHandler = () => {
-    setCartShow(false)
-  }
-  const showCartHandler = () => 
-  {
-    setCartShow(true)
-  }
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
   return (
     <>
-    {cartShow && <Cart onCloseCart={closeCartHandler}/>}
-    <Header onShowCart={showCartHandler}/>
+      <Header />
       <main>
-        <Authentication />
+        <Switch>
+          <Route path="/auth">{!isLoggedIn && <Authentication />}</Route>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route>
+            {isLoggedIn && <ProfilePage />}
+            {!isLoggedIn && <Redirect to="/auth" />}
+          </Route>
+        </Switch>
       </main>
     </>
   );
