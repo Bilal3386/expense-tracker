@@ -4,10 +4,12 @@ import SignUp from "./SignUp";
 import classes from "./Authentication.module.css";
 import AuthContext from "../../store/auth-context";
 import Button from "../UI/Button";
+import ForgotPassword from "./ForgotPassword";
 
 const Authentication = (props) => {
   const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(false);
+  const [isForgot, setIsForgot] = useState(false);
 
   const signUpHandler = async (email, password) => {
     try {
@@ -68,6 +70,36 @@ const Authentication = (props) => {
       });
   };
 
+  const forgotPasswordUserHandler = email => {
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDDV6olktSV8IBZY3FvpG5pREDCf4qgvCc",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          requestType: "PASSWORD_RESET",
+          email: email,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            throw new Error(data.error.message);
+          });
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
   const clickSignUpHandler = () => {
     setIsLogin(true);
   };
@@ -76,6 +108,11 @@ const Authentication = (props) => {
     setIsLogin(false);
   };
 
+  const forgotPasswordHandler = () =>
+  {
+    setIsForgot(true)
+
+  }
   return (
     <section className={classes.auth}>
       {!isLogin && <SignUp onSignUp={signUpHandler} />}
@@ -83,6 +120,13 @@ const Authentication = (props) => {
       {!isLogin && (
         <Button onClick={clickSignUpHandler}>Have an account? Login</Button>
       )}
+      {isForgot && <ForgotPassword onForgot={forgotPasswordUserHandler}/>}
+      {isLogin && (
+        <Button onClick={forgotPasswordHandler}>
+          Forgot Password?
+        </Button>
+      )}
+      <br/>
       {isLogin && (
         <Button onClick={clickLoginHandler}>
           Don't have an account? Sign up
