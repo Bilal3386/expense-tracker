@@ -11,7 +11,10 @@ const AddNewExpensesForm = () => {
 
   const submitHandler = (obj) => {
     expenseCtx.addItem(obj)
+    if(expenseCtx.loader)
+    {
     setOnShow(false)
+    }
   }
 
   
@@ -23,7 +26,7 @@ const AddNewExpensesForm = () => {
     <section className={classes["expenses-form"]}>
       <h2>Daily Expenses</h2>
       {onShow && <AddExpensesForm onShow={submitHandler}/>}
-      {!onShow && <button onClick={formHandler}>Add New Expense</button>}
+      {!onShow && <button className={classes.btn} onClick={formHandler}>Add New Expense</button>}
 
       <ExpensesItems/>
     </section>

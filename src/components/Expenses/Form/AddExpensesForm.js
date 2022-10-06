@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import DailyExpensesContext from "../../../store/daily-expenses-context";
 import classes from "./AddExpensesForm.module.css";
 
 const AddExpensesForm = props => {
+    const expenseCtx = useContext(DailyExpensesContext)
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -52,7 +54,8 @@ const AddExpensesForm = props => {
         <option value="petrol">Petrol</option>
         <option value="salary">Salary</option>
       </select>
-      <button>Add Expense</button>
+      {!expenseCtx.loader && <button>Add Expense</button>}
+      {expenseCtx.loader && <p>Adding...</p>}
     </form>
   );
 };
