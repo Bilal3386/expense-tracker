@@ -1,37 +1,35 @@
-.complete-user-profile {
+.form {
   width: 95%;
   max-width: 25rem;
   margin: 2rem auto;
-  text-align: start;
   padding: 12px;
-  border:  1px solid rgb(215, 215, 215);
+  border: 1px solid rgb(215, 215, 215);
 }
 
-.complete-user-profile h2{
-  text-align: center;
-  font-weight: 400;
-}
-
-.complete-user-profile input {
+.form input, select{
   margin: 0 auto;
   padding: 10px;
   border: 0.5px solid rgb(215, 215, 215);
   margin-bottom: 0.65rem;
   font-size: 18px;
   border-radius: 5px;
-  width: 99%;
+  width: 95%;
   transition: background-color 1s;
 }
 
-
-.complete-user-profile label {
-  font-size: 17px;
-  padding: 0 12px;
-  padding-bottom: 1rem;
+.form h2 {
   text-align: center;
+  font-weight: 400;
 }
-.complete-user-profile button {
-  width: 99%;
+
+.form input:hover,
+.form input:active,
+.form input:focus {
+  background-color: rgb(203, 234, 255);
+}
+
+.form button {
+  width: 95%;
   padding: 8px;
   margin: 1rem 0 1rem 0;
   border: none;

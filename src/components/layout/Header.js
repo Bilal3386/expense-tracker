@@ -6,25 +6,28 @@ import AuthContext from "../../store/auth-context";
 
 const Header = (props) => {
   const authCtx = useContext(AuthContext);
-  const history = useHistory()
+  const history = useHistory();
   const isLoggedIn = authCtx.isLoggedIn;
 
   const logOutHandler = () => {
-    authCtx.logout()
-    history.replace('/auth')
-  }
+    authCtx.logout();
+    history.replace("/auth");
+  };
   return (
     <header className={classes.header}>
       <h2>Welcome to Expense Tracker!!!</h2>
       <nav>
         <ul>
-           
+          <li>
+            <NavLink to="/" activeClassName={classes.active} exact>
+              Home
+            </NavLink>
+          </li>
+          {isLoggedIn && (
             <li>
-              <NavLink to="/" activeClassName={classes.active} exact>
-                Home
-              </NavLink>
+              <NavLink to='/dailyExpenses' activeClassName={classes.active}>Daily Expenses</NavLink>
             </li>
-          
+          )}
           {!isLoggedIn && (
             <li>
               <NavLink to="/Auth" activeClassName={classes.active}>
