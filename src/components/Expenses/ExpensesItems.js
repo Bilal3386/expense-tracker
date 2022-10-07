@@ -23,7 +23,7 @@ const ExpensesItems = (props) => {
             DELETE
             {expenseCtx.loader && "Deleting..."}
           </button>
-          <button className={classes.edit}>EDIT</button>
+          <button className={classes.edit} onClick={() => expenseCtx.editItem(item, item.id)}>EDIT</button>
         </li>
       )})
       

@@ -2,29 +2,36 @@ import React, { useContext, useState } from "react";
 import DailyExpensesContext from "../../../store/daily-expenses-context";
 import classes from "./AddExpensesForm.module.css";
 
-const AddExpensesForm = props => {
-    const expenseCtx = useContext(DailyExpensesContext)
+const AddExpensesForm = (props) => {
+  const expenseCtx = useContext(DailyExpensesContext);
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
 
-  const amountHandler = event => {
-    setAmount(event.target.value)
-  }
-
-  const descriptionHandler = event => {
-    setDescription(event.target.value)
-  }
-
-  const categoryHandler = event => {
-    setCategory(event.target.value)
-  }
-
-  const submitHandler = event => {
-    event.preventDefault()
-    const newExpenseObj = {amount: amount, description: description, category: category}
-    props.onShow(newExpenseObj)
-  }
+  const submitHandler = (event) => {
+    event.preventDefault();
+    if (expenseCtx.isEditing) {
+      expenseCtx.editItems.amount = amount;
+      expenseCtx.editItems.description = description;
+      expenseCtx.editItems.category = category;
+      const newExpenseObj = {
+        amount: amount,
+        description: description,
+        category: category,
+      };
+      props.onEditShow(newExpenseObj);
+    } else {
+      const newExpenseObj = {
+        amount: amount,
+        description: description,
+        category: category,
+      };
+      props.onAddShow(newExpenseObj);
+      setAmount("");
+      setDescription("");
+      setCategory("");
+    }
+  };
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -36,8 +43,8 @@ const AddExpensesForm = props => {
         name="amount"
         placeholder="Enter your amount..."
         required
-        value={amount}
-        onChange={amountHandler}
+        defaultValue={expenseCtx.editItems.amount || ""}
+        onChange={(e) => setAmount(e.target.value)}
       />
       <input
         autoComplete="on"
@@ -46,10 +53,15 @@ const AddExpensesForm = props => {
         name="description"
         placeholder="Enter description..."
         required
-        value={description}
-        onChange={descriptionHandler}
+        defaultValue={expenseCtx.editItems.description || ""}
+        onChange={(e) => setDescription(e.target.value)}
       />
-      <select required value={category} onChange={categoryHandler}>
+      <select
+        required
+        defaultValue={expenseCtx.editItems.category || ""}
+        onChange={(e) => setCategory(e.target.value)}
+      >
+      <option value="0">Select category</option>
         <option value="food">Food</option>
         <option value="petrol">Petrol</option>
         <option value="salary">Salary</option>
