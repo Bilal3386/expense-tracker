@@ -1,12 +1,13 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import classes from "./CompleteUserProfile.module.css";
 import { BsGithub, BsGlobe } from "react-icons/bs";
-import AuthContext from "../../store/auth-context";
+import {useSelector} from 'react-redux'
 
 const CompleteUserProfile = (props) => {
   const fullNameRef = useRef("");
   const urlRef = useRef("");
-  const authCtx = useContext(AuthContext);
+  const idToken = useSelector(state => state.auth.idToken)
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const CompleteUserProfile = (props) => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: idToken,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -38,20 +39,20 @@ const CompleteUserProfile = (props) => {
       .catch((err) => {
         alert(err);
       });
-  }, [authCtx.token]);
+  }, [idToken]);
 
   const updateProfileHandler = (event) => {
     event.preventDefault();
     if (!user.displayName) {
       const enteredFullName = fullNameRef.current.value;
       const enteredUrl = urlRef.current.value;
-      //console.log(enteredFullName,enteredUrl, authCtx.token)
+      //console.log(enteredFullName,enteredUrl, idToken)
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDDV6olktSV8IBZY3FvpG5pREDCf4qgvCc",
         {
           method: "POST",
           body: JSON.stringify({
-            idToken: authCtx.token,
+            idToken: idToken,
             displayName: enteredFullName,
             photoUrl: enteredUrl,
             deleteAttribute: null,
@@ -80,13 +81,13 @@ const CompleteUserProfile = (props) => {
     } else {
       const enteredFullName = fullNameRef.current.value;
       const enteredUrl = urlRef.current.value;
-      //console.log(enteredFullName,enteredUrl, authCtx.token)
+      //console.log(enteredFullName,enteredUrl, idToken)
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDDV6olktSV8IBZY3FvpG5pREDCf4qgvCc",
         {
           method: "POST",
           body: JSON.stringify({
-            idToken: authCtx.token,
+            idToken: idToken,
             displayName: enteredFullName,
             photoUrl: enteredUrl,
             deleteAttribute: null,

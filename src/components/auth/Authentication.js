@@ -1,13 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import classes from "./Authentication.module.css";
-import AuthContext from "../../store/auth-context";
-import Button from "../UI/Button";
+import {useDispatch} from "react-redux";
+import Button from "../UI/Button"
 import ForgotPassword from "./ForgotPassword";
+import { authAction } from "../../redux-store/auth-reducer";
 
 const Authentication = (props) => {
-  const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
   const [isForgot, setIsForgot] = useState(false);
 
@@ -63,14 +64,16 @@ const Authentication = (props) => {
       })
       .then((data) => {
         console.log(data);
-        authCtx.login(data.idToken, data.email);
+        // authCtx.login(data.idToken, data.email);
+        const loginObj={idToken: data.idToken, email: data.email}
+        dispatch(authAction.login(loginObj))
       })
       .catch((err) => {
         alert(err);
       });
   };
 
-  const forgotPasswordUserHandler = email => {
+  const forgotPasswordUserHandler = (email) => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDDV6olktSV8IBZY3FvpG5pREDCf4qgvCc",
       {
@@ -99,7 +102,7 @@ const Authentication = (props) => {
       .catch((err) => {
         alert(err);
       });
-  }
+  };
   const clickSignUpHandler = () => {
     setIsLogin(true);
   };
@@ -108,11 +111,9 @@ const Authentication = (props) => {
     setIsLogin(false);
   };
 
-  const forgotPasswordHandler = () =>
-  {
-    setIsForgot(true)
-
-  }
+  const forgotPasswordHandler = () => {
+    setIsForgot(true);
+  };
   return (
     <section className={classes.auth}>
       {!isLogin && <SignUp onSignUp={signUpHandler} />}
@@ -120,13 +121,11 @@ const Authentication = (props) => {
       {!isLogin && (
         <Button onClick={clickSignUpHandler}>Have an account? Login</Button>
       )}
-      {isForgot && <ForgotPassword onForgot={forgotPasswordUserHandler}/>}
+      {isForgot && <ForgotPassword onForgot={forgotPasswordUserHandler} />}
       {isLogin && (
-        <Button onClick={forgotPasswordHandler}>
-          Forgot Password?
-        </Button>
+        <Button onClick={forgotPasswordHandler}>Forgot Password?</Button>
       )}
-      <br/>
+      <br />
       {isLogin && (
         <Button onClick={clickLoginHandler}>
           Don't have an account? Sign up

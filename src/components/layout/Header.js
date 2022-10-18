@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
 import HeaderCartButton from "./HeaderCartButton";
 import classes from "./Header.module.css";
 import { NavLink, useHistory } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { authAction } from "../../redux-store/auth-reducer";
 
 const Header = (props) => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch()
   const history = useHistory();
-  const isLoggedIn = authCtx.isLoggedIn;
+  // const isLoggedIn = authCtx.isLoggedIn;
 
   const logOutHandler = () => {
-    authCtx.logout();
+    dispatch(authAction.logout())
     history.replace("/auth");
   };
   return (
@@ -25,7 +27,9 @@ const Header = (props) => {
           </li>
           {isLoggedIn && (
             <li>
-              <NavLink to='/dailyExpenses' activeClassName={classes.active}>Daily Expenses</NavLink>
+              <NavLink to="/dailyExpenses" activeClassName={classes.active}>
+                Daily Expenses
+              </NavLink>
             </li>
           )}
           {!isLoggedIn && (

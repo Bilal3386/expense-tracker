@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import AuthContext from "../../store/auth-context";
 import classes from "./Profile.module.css";
 import Button from "../UI/Button";
+import {useSelector} from 'react-redux'
 import CompleteUserProfile from "../CompleteUserProfile/CompleteUserProfile";
 
 const Profile = () => {
-  const authCtx = useContext(AuthContext);
+  const idToken = useSelector(state => state.auth.idToken)
+  const email = useSelector(state => state.auth.email)
 
   const verifyEmailHandler = () => {
     fetch(
@@ -14,7 +14,7 @@ const Profile = () => {
         method: "POST",
         body: JSON.stringify({
           requestType: "VERIFY_EMAIL",
-          idToken: authCtx.token,
+          idToken: idToken,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const Profile = () => {
       <p>
         you've entered{" "}
         <span style={{ fontWeight: "bold", fontStyle: "italic" }}>
-          {authCtx.email}
+          {email}
         </span>{" "}
         as the email address for your account.
         <br />
