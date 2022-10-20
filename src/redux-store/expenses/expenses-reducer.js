@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialExpensesState = {
   expenses: [],
-  totalAmount: null,
 };
 const expensesSlice = createSlice({
   name: "expenses",
