@@ -3,10 +3,10 @@ import classes from "./AddExpensesForm.module.css";
 
 const AddExpensesForm = (props) => {
 
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  
+  const [amount, setAmount] = useState(props.itemEdit.amount|| '');
+  const [description, setDescription] = useState(props.itemEdit.description|| '');
+  const [category, setCategory] = useState(props.itemEdit.category|| '');
+
   const temp  = [props.itemEdit]
   const submitHandler = (event) => {
     event.preventDefault();
@@ -44,7 +44,7 @@ const AddExpensesForm = (props) => {
         name="amount"
         placeholder="Enter your amount..."
         required
-        defaultValue={props.itemEdit.amount || ""}
+        value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
       <input
@@ -54,12 +54,12 @@ const AddExpensesForm = (props) => {
         name="description"
         placeholder="Enter description..."
         required
-        defaultValue={props.itemEdit.description || ""}
+        value={ description}
         onChange={(e) => setDescription(e.target.value)}
       />
       <select
         required
-        defaultValue={props.itemEdit.category || ""}
+        value={category}
         onChange={(e) => setCategory(e.target.value)}
       >
         <option value="0">Select category</option>
