@@ -25,7 +25,7 @@ function App() {
   }, [dispatch]);
 
   let amount = 0;
-  expenses.forEach((element) => {
+  expenses?.forEach((element) => {
     amount += Number(element.amount);
   });
 

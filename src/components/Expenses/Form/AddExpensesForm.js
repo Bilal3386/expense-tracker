@@ -3,9 +3,9 @@ import classes from "./AddExpensesForm.module.css";
 
 const AddExpensesForm = (props) => {
 
-  const [amount, setAmount] = useState(props.itemEdit.amount|| '');
-  const [description, setDescription] = useState(props.itemEdit.description|| '');
-  const [category, setCategory] = useState(props.itemEdit.category|| '');
+  let [amount, setAmount] = useState('');
+  let [description, setDescription] = useState('');
+  let [category, setCategory] = useState('');
 
   const temp  = [props.itemEdit]
   const submitHandler = (event) => {
@@ -20,6 +20,7 @@ const AddExpensesForm = (props) => {
         category: category,
       };
       props.onEditShow(newExpenseObj);
+      event.target.reset()
     } else {
       console.log('submitted')
       const newExpenseObj = {
@@ -28,10 +29,9 @@ const AddExpensesForm = (props) => {
         category: category,
       };
       props.onAddShow(newExpenseObj);
-      setAmount("");
-      setDescription("");
-      setCategory("");
+       event.target.reset()
     }
+     
   };
 
   return (
@@ -44,7 +44,7 @@ const AddExpensesForm = (props) => {
         name="amount"
         placeholder="Enter your amount..."
         required
-        value={amount}
+        defaultValue={ props.itemEdit.amount|| ''}
         onChange={(e) => setAmount(e.target.value)}
       />
       <input
@@ -54,12 +54,12 @@ const AddExpensesForm = (props) => {
         name="description"
         placeholder="Enter description..."
         required
-        value={ description}
+        defaultValue={props.itemEdit.description|| ''}
         onChange={(e) => setDescription(e.target.value)}
       />
       <select
         required
-        value={category}
+        defaultValue={props.itemEdit.amount|| ''}
         onChange={(e) => setCategory(e.target.value)}
       >
         <option value="0">Select category</option>

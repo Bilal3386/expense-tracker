@@ -29,7 +29,7 @@ const expensesSlice = createSlice({
       newExpenses.forEach((ele, indx) => {
         if (id === ele.id) {
           newExpenses.splice(indx, 1);
-          state.expenses = [...newExpenses, action.payload.existingExpense];
+          state.expenses = [...newExpenses, action.payload.objEdit];
         }
       });
     },

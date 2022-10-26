@@ -114,6 +114,7 @@ export const editExpenseData = (objEdit, existingExpense) => {
       }
     };
     await editExpense();
+    console.log(existingExpense)
     const obj = { existingExpense, objEdit };
     dispatch(expenseAction.editExpense(obj));
   };
